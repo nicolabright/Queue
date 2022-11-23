@@ -1,5 +1,5 @@
 all:    queue.c
-	gcc -g queue.c -o queue.exe
+	gcc queue.c -o queue.exe
 	@ cls
 	@ queue.exe
 

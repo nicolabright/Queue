@@ -6,19 +6,20 @@
 	-----
 
 	Inizializzazione:
-		Stack *myStack = NULL;
+		Queue *myQueue;
+		QueueInit(&myQueue);
 
 	Operazione ENQUEUE:
-		StackEnqueue(&myStack, 1);		/// <<<--- 1
+		QueueEnqueue(&myStack, 1);		/// <<<--- 1
 
 	Operazione BACK:
-		StackBack(&myStack)				/// --->>> (valore int)
+		QueueBack(&myStack)				/// --->>> (valore int)
 
 	Operazione FRONT:
-		StackFront(&myStack)			/// --->>> (valore int)
+		QueueFront(&myStack)			/// --->>> (valore int)
 
 	Operazione DEQUEUE:
-		StackDequeue(&myStack)			/// --->>> (valore int)
+		QueueDequeue(&myStack)			/// --->>> (valore int)
 
 */
 
@@ -42,8 +43,10 @@ void QueueEnqueue(Queue **ptrQueue, int enqueueValue) {
 	QueueElement *newElement = (QueueElement *) malloc( sizeof(QueueElement) );
 	newElement->value = enqueueValue;
 	newElement->backElement = NULL;
-	QueueElement *queueBackElement = ((*ptrQueue)->backElement);
-	(*queueBackElement).backElement = newElement;
+	if ((*ptrQueue)->backElement != NULL) {
+		QueueElement *queueBackElement = (*ptrQueue)->backElement;
+		(*queueBackElement).backElement = newElement;
+	}
 	(*ptrQueue)->backElement = newElement;
 	if ( (*ptrQueue)->frontElement == NULL ) (*ptrQueue)->frontElement = newElement;
 }
@@ -82,16 +85,14 @@ int main() {
 	QueueInit(&myQueue);
 	QueuePrint(&myQueue);
 
-
 	QueueEnqueue(&myQueue, 1);
-
 	QueueEnqueue(&myQueue, 2);
 	QueuePrint(&myQueue);
 
 	QueueEnqueue(&myQueue, 3);
 	QueuePrint(&myQueue);
 
-/*
+	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
 	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
 	QueuePrint(&myQueue);
 
@@ -103,8 +104,7 @@ int main() {
 	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
 	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
 	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
-
-*/
+	QueuePrint(&myQueue);
 
 	return(0);
 }
