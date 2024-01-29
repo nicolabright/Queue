@@ -39,6 +39,11 @@ void QueueInit(Queue **ptrQueue) {
 	(*ptrQueue)->backElement = NULL;
 }
 
+
+void QueueFinish(Queue **ptrQueue) {
+	free((*ptrQueue));
+}
+
 void QueueEnqueue(Queue **ptrQueue, int enqueueValue) {
 	QueueElement *newElement = (QueueElement *) malloc( sizeof(QueueElement) );
 	newElement->value = enqueueValue;
@@ -105,6 +110,15 @@ int main() {
 	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
 	printf("Dequeue: %d\n", QueueDequeue(&myQueue));
 	QueuePrint(&myQueue);
+	
+	// Test per verificare il NON-CONSUMO di memoria... 
+	int valTest = 0;
+	while (1) {
+		QueueEnqueue(&myQueue, 15);
+		valTest = QueueDequeue(&myQueue);
+	}
+	
+	QueueFinish(&myQueue);
 
 	return(0);
 }
